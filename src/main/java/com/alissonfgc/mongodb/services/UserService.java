@@ -36,9 +36,9 @@ public class UserService {
 	}
 
 	public User update(User newDataObj) {
-		User updateDataObj = findById(newDataObj.getId());		
-		updateData(updateDataObj, newDataObj);
-		return repo.save(updateDataObj);
+		User updatedDataObj = findById(newDataObj.getId());		
+		updateData(updatedDataObj, newDataObj);
+		return repo.save(updatedDataObj);
 	}
 
 	private void updateData(User oldDataObj, User newDataObj) {
