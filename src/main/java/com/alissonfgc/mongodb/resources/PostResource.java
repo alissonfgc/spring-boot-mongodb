@@ -1,5 +1,8 @@
 package com.alissonfgc.mongodb.resources;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,18 @@ public class PostResource {
 	@GetMapping(value = "/titlesearch")
 	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
 		List<Post> list = service.findByTitle(URL.decodeParam(text));
+		return ResponseEntity.ok().body(list);
+	}
+
+	@GetMapping(value = "/fullsearch")
+	public ResponseEntity<List<Post>> fullSearch(@RequestParam(value = "text", defaultValue = "") String text,
+			@RequestParam(value = "minDate", defaultValue = "") String minDate,
+			@RequestParam(value = "maxDate", defaultValue = "") String maxDate) {
+		text = URL.decodeParam(text);
+		LocalDate convertedMinDate = new Date(0L).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate min = URL.convertDate(minDate, convertedMinDate);
+		LocalDate max = URL.convertDate(maxDate, LocalDate.now());
+		List<Post> list = service.fullSearch(text, min, max);
 		return ResponseEntity.ok().body(list);
 	}
 }
