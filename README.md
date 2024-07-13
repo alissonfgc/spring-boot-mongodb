@@ -12,7 +12,7 @@
 - ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
 
 > ### Projeto Back-end
-> Projeto foi parte do curo de back end com Java e Spring
+> Projeto foi parte do curso de back-end com Java e Spring
 > - Prof. Dr. Nelio Alves
 > - [http://educandoweb.com.br](https://devsuperior.com.br/)
 
@@ -27,38 +27,105 @@
   - Referências
 - Realizar consultas com Spring Data e MongoRepository
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-##
-
-#### Objetivos
-- Criar projeto Spring Boot Java
-- Implementar modelo de domínio
-- Estruturar camadas lógicas: resource, service, repository
-- Configurar banco de dados de teste (H2)
-- Povoar o banco de dados
-- CRUD - Create, Retrieve, Update, Delete
-- Tratamento de exceções
-
 ## Camadas Lógicas
 
-![Screenshot 2024-07-06 071526](https://github.com/alissonfgc/course-spring-boot-jpa/assets/72516014/e831298b-3966-4afa-84ba-e76b25f4aa8c)
-
-## Modelo de Domínio
-
-  ![Screenshot 2024-07-06 071037](https://github.com/alissonfgc/course-spring-boot-jpa/assets/72516014/7bd1ec65-e84d-46ec-9254-2f9d3ee21999)
+![Screenshot 2024-07-12 204032](https://github.com/user-attachments/assets/f1a40d6b-fdbf-41a4-be68-464811cc7fa8)
 
 ## Instância de Domínio
 
-![Screenshot 2024-07-06 071356](https://github.com/alissonfgc/course-spring-boot-jpa/assets/72516014/bd64b99b-cc09-4869-ac17-5d2ad32d28ff)
+![Screenshot 2024-07-12 204338](https://github.com/user-attachments/assets/d281fc8e-4f68-44a9-8382-10231c6f3160)
+
+## Modelo de Domínio
+
+![Screenshot 2024-07-12 204548](https://github.com/user-attachments/assets/2fd0b8b6-cafe-438a-9762-9de6dcad0186)
+
+> [!IMPORTANT]
+> A seguir terá a explicação de como se chegou neste modelo de domínio.
+
+  Se neste projeto fosse utilizado um banco de dados relacional o modelo de domínio ficaria como a imagem a seguir:
+
+![Screenshot 2024-07-12 205349](https://github.com/user-attachments/assets/609e674e-1152-4d66-92a0-5965ecce60fb)
+
+  E para fazer consulta, considerando que houvesse muitos dados, a recuperação dos dados aconteceria conforme o exemplo a seguir:
+
+![Screenshot 2024-07-12 205631](https://github.com/user-attachments/assets/7020bc44-5f99-4a52-ae0e-373f9bd88d40)
+
+  Assim na implementação dos objetos, as associações entre objetos, seriam feitas por referências dos ponteiros, e para se fazer as consultas, considerando uma base de dados grande, as consultas iriam requer muito recurso, tornando as consultas lentas.
+
+  Logo foi decidido por implementar, conforme a primeira imagem, onde as consultas, considerando uma base de dados grande, iriam requerir menos recursos, mesmo que pra isso seja necessário haver a desnomalização dos dados.
+
+> [!TIP]
+> A seguir, a forma que foi implementado.
+
+  Da forma que foi implementado, optando por escolhe um banco de dados não relacional, as consultas realizadas trazem os dados conforme o exemplo a seguir:
+
+```json
+
+{
+  "id": "1001",
+  "name": "Maria Brown",
+  "email": "maria@gmail.com",
+  "posts": ["5001", "5010"]
+}
+
+{
+  "id": "5001",
+  "date": "2018-03-21",
+  "title": "Partiu viagem",
+  "body": "Vou viajar para São Paulo. Abraços!",
+  "author": {
+    "id": "1001",
+    "name": "Maria Brown"
+  },
+  "comments": [
+    {
+      "text": "Boa viagem mano!",
+      "date": "2018-03-21",
+      "author": {
+        "id": "1013",
+        "name": "Alex Green"
+      }
+    },
+    {
+      "text": "Aproveite!",
+      "date": "2018-03-22",
+      "author": {
+        "id": "1027",
+        "name": "Bob Grey"
+      }
+    }
+  ]
+}
+
+{
+  "id": "5010",
+  "date": "2018-03-23",
+  "title": "Bom dia",
+  "body": "Acordei feliz hoje!",
+  "author": {
+    "id": "1001",
+    "name": "Maria Brown"
+  },
+  "comments": [
+    {
+      "text": "Tenha um ótimo dia!",
+      "date": "2018-03-23",
+      "author": {
+        "id": "1013",
+        "name": "Alex Green"
+      }
+    }
+  ]
+}
+
+```
+#
+> Projeto foi parte do curso de back-end com Java e Spring
+> - Prof. Dr. Nelio Alves
+> - [http://educandoweb.com.br](https://devsuperior.com.br/)
+
+### Referências:
+- https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+- https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-nosql.html
+- https://stackoverflow.com/questions/38921414/mongodb-what-are-the-default-user-and-password
+- https://pt.stackoverflow.com/questions/31362/o-que-é-um-dto
