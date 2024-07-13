@@ -52,6 +52,9 @@
 
   Assim na implementação dos objetos, as associações entre objetos, seriam feitas por referências dos ponteiros, e para se fazer as consultas, considerando uma base de dados grande, as consultas iriam requer muito recurso, tornando as consultas lentas.
 
+> [!NOTE]
+> Mais sobre a diferença entre bancos de dados relacionais aqui: [SQL ou NoSQL.pdf](https://github.com/user-attachments/files/16200339/slides-aula-nosql-mongodb.pdf).
+
   Logo foi decidido por implementar, conforme a primeira imagem, onde as consultas, considerando uma base de dados grande, iriam requerir menos recursos, mesmo que pra isso seja necessário haver a desnomalização dos dados.
 
 > [!TIP]
